@@ -7,7 +7,7 @@ class StocksApp extends Component {
   constructor(props) {
     super(props);
 
-    let stocks = JSON.parse(localStorage.getItem('stocks'));
+    let stocks = JSON.parse(localStorage.getItem('stocks')) || [];
 
     this.state = {
       nextStockId: 0,
@@ -34,6 +34,7 @@ class StocksApp extends Component {
   handleDelete(id) {
     const stocks = this.state.stocks.filter((stock) => (stock.id !== id));
     this.setState({stocks});
+    localStorage.setItem('stocks', JSON.stringify(stocks));
   }
 
   handleSave(stock) {
