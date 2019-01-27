@@ -32,9 +32,16 @@ class StocksApp extends Component {
   }
 
   handleDelete(id) {
-    const stocks = this.state.stocks.filter((stock) => (stock.id !== id));
-    this.setState({stocks});
-    localStorage.setItem('stocks', JSON.stringify(stocks));
+    this.setState((prevState, props) => {
+      const stocks = prevState.stocks.filter((stock) => (stock.id !== id));
+      localStorage.setItem('stocks', JSON.stringify(stocks));
+      return {
+        nextStockId: prevState.nextStockId,
+        search: prevState.search,
+        stocks: stocks
+      } 
+    });
+    
   }
 
   handleSave(stock) {
@@ -48,7 +55,7 @@ class StocksApp extends Component {
       return {
         nextStockId: prevState.nextStockId + 1,
         search: prevState.search,
-        stocks: [...this.state.stocks, newStock]
+        stocks: [...prevState.stocks, newStock]
       }
     });
   }
