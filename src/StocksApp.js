@@ -28,7 +28,7 @@ class StocksApp extends Component {
   }
 
   handleChange(query) {
-    this.setState({search: query});
+    this.setState({search: query.toLowerCase()});
   }
 
   handleDelete(id) {
