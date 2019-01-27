@@ -1,0 +1,43 @@
+.card {
+  align-items: right;
+  color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  font-family:  Helvetica, Arial, sans-serif;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.change {
+  font-size: 1em;
+  margin: .25em;
+}
+
+li {
+  position: relative;
+  padding-top: var(99.5%);
+}
+
+li:after {
+  content:"";
+  height: var(0px);
+  display: block;
+}
+
+.neg {
+  background-color: #F44336;
+}
+
+.pos {
+  background-color: #4CAF50;
+}
+
+.price {
+  font-size: 1em;
+  margin: .25em;
+}
+
+.ticker {
+  font-size: 3em;
+  margin: .25em;
+}
