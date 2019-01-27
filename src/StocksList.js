@@ -5,7 +5,7 @@ import './StocksList.css';
 class StocksList extends Component {
   render() {
     const stocks = this.props.stocks.map((stock,index) => (
-      <Stock key={index} {...stock} />
+      <Stock key={stock.id} {...stock} />
     ));
     
     return (
