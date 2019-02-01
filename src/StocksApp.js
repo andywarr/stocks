@@ -46,43 +46,31 @@ class StocksApp extends Component {
 
   handleSave(stock) {
     this.setState((prevState, props) => {
-      const newStock = {
-        change: Number.parseFloat(stock.change),
-        changePercent: Number.parseFloat(stock.changePercent),
-        price: Number.parseFloat(stock.latestPrice),
-        ticker: `${stock.symbol}`, 
-        id: this.state.nextStockId};
       return {
-        nextStockId: prevState.nextStockId + 1,
+        nextStockId: ++prevState.nextStockId,
         search: prevState.search,
-        stocks: [...prevState.stocks, newStock]
+        stocks: [...prevState.stocks, stock]
       }
     });
   }
 
   getStocks() {
-    let nextStockId = -1;
+    let nextStockId = 0;
 
     const promises = this.state.stocks.map((stock, index) => (
-      fetch(`https://api.iextrading.com/1.0/stock/${stock.ticker}/quote?displayPercent=true`)
+      fetch(`https://api.iextrading.com/1.0/stock/${stock.symbol}/quote?displayPercent=true`)
       .then((response) => (response.json()))));
     
     Promise.all(promises)
     .then((stocks) => (
       stocks.map((stock, index) => {
-        nextStockId += 1;
-        
         return {
-          change: Number.parseFloat(stock.change),
-          changePercent: Number.parseFloat(stock.changePercent),
-          id: nextStockId,
-          price: Number.parseFloat(stock.latestPrice),
-          ticker: `${stock.symbol}`
+          ...stock,
+          id: nextStockId++
         }
       })
     ))
     .then((stocks) => {
-      nextStockId += 1;
       this.setState({nextStockId, stocks});
       localStorage.setItem('stocks', JSON.stringify(stocks));
     });
@@ -97,7 +85,7 @@ class StocksApp extends Component {
           onSave={this.handleSave}
           stocks={this.state.stocks} />
         <StocksList stocks={this.state.stocks.filter((stock) => (
-          stock.ticker.toLowerCase().includes(this.state.search)
+          stock.symbol.toLowerCase().includes(this.state.search)
         ))} />
       </div>
     );  

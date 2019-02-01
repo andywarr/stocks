@@ -26,13 +26,13 @@ class Toolbar extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    let ticker = this.state.search;
-    let stock = this.props.stocks.find((stock) => (stock.ticker.toLowerCase() === ticker.toLowerCase()));
+    let symbol = this.state.search;
+    let stock = this.props.stocks.find((stock) => (stock.symbol.toLowerCase() === symbol.toLowerCase()));
 
     if (stock) {
       this.props.onDelete(stock.id);
     } else {
-      fetch(`https://api.iextrading.com/1.0/stock/${ticker}/quote?displayPercent=true`)
+      fetch(`https://api.iextrading.com/1.0/stock/${symbol}/quote?displayPercent=true`)
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Stock not returned")
@@ -53,7 +53,7 @@ class Toolbar extends Component {
                 autoComplete="off" 
                 id="search"
                 onChange={this.handleChange}
-                placeholder="Type stock ticker to add, filter and remove stocks"
+                placeholder="Type stock symbol to add, filter and remove stocks"
                 type="text" />
             </form>)
   }
