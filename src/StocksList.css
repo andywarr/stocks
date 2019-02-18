@@ -5,10 +5,6 @@
   grid-auto-rows: 1fr;
 }
 
-.grid > div { 
-  padding: 10px;
-}
-
 .grid::before {
   content: '';
   width: 0;

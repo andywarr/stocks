@@ -19,6 +19,8 @@ class StocksApp extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleSwap = this.handleSwap.bind(this);
+    this.swapAtIndex = this.swapAtIndex.bind(this);
 
     this.getStocks();
 
@@ -54,6 +56,14 @@ class StocksApp extends Component {
     });
   }
 
+  handleSwap(oldIndex, newIndex) {
+    this.setState((prevState, props) => {
+      const stocks = this.swapAtIndex(prevState.stocks, oldIndex, newIndex);
+      localStorage.setItem('stocks', JSON.stringify(stocks));
+      return {stocks};
+    });
+  }
+
   getStocks() {
     let nextStockId = 0;
 
@@ -84,11 +94,23 @@ class StocksApp extends Component {
           onDelete={this.handleDelete} 
           onSave={this.handleSave}
           stocks={this.state.stocks} />
-        <StocksList stocks={this.state.stocks.filter((stock) => (
-          stock.symbol.toLowerCase().includes(this.state.search)
-        ))} />
+        <StocksList
+          onSwap={this.handleSwap} 
+          stocks={this.state.stocks.filter((stock) => (
+            stock.symbol.toLowerCase().includes(this.state.search)
+          ))} />
       </div>
     );  
+  }
+
+  swapAtIndex(arr, fromIndex, toIndex) {
+    const newArr = arr.slice();
+    const val = newArr[fromIndex];
+
+    newArr.splice(fromIndex, 1);
+    newArr.splice(toIndex, 0, val);
+
+    return newArr;
   }
 }
 
