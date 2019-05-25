@@ -9,7 +9,7 @@ const Stock = (props) => {
   	<div className={change >= 0 ? "card pos" : "card neg"}>
       <h2 className="change">{`${change >= 0 ? "+"+change : change} (${changePercent.toFixed(2)}%)`}</h2>
       <h1 className="ticker">{symbol}</h1>
-      <h2 className="price">${latestPrice}</h2>
+      <h2 className="price">${latestPrice.toFixed(2)}</h2>
     </div>
   )
 }
