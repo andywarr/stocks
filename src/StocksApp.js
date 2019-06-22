@@ -68,7 +68,7 @@ class StocksApp extends Component {
     let nextStockId = 0;
 
     const promises = this.state.stocks.map((stock, index) => (
-      fetch(`https://api.iextrading.com/1.0/stock/${stock.symbol}/quote?displayPercent=true`)
+      fetch(`https://cloud.iexapis.com/stable/stock/${stock.symbol}/quote?token=pk_4faf5813fcb3433983a2e258885ea785&displayPercent=true`)
       .then((response) => (response.json()))));
     
     Promise.all(promises)

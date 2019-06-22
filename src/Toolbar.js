@@ -32,7 +32,7 @@ class Toolbar extends Component {
     if (stock) {
       this.props.onDelete(stock.id);
     } else {
-      fetch(`https://api.iextrading.com/1.0/stock/${symbol}/quote?displayPercent=true`)
+      fetch(`https://cloud.iexapis.com/stable/stock/${symbol}/quote?token=pk_4faf5813fcb3433983a2e258885ea785&displayPercent=true`)
       .then((response) => {
         if (response.status !== 200) {
           throw new Error("Stock not returned")
